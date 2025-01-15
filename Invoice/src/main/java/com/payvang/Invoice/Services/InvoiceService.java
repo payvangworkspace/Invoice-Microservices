@@ -6,46 +6,58 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payvang.Invoice.Entities.Invoice;
+import com.payvang.Invoice.Exceptions.CustomException;
 import com.payvang.Invoice.Repositories.InvoiceRepository;
 
 @Service
 public class InvoiceService {
 
-    @Autowired
-    private InvoiceRepository invoiceRepository;
+	@Autowired
+	private InvoiceRepository invoiceRepository;
 
-    public Invoice saveInvoice(Invoice invoice) {
-        return invoiceRepository.save(invoice);
-    }
+	public boolean saveInvoice(Invoice invoice) {
 
-    public List<Invoice> saveInvoices(List<Invoice> invoices) {
-        return invoiceRepository.saveAll(invoices);
-    }
+		Invoice savedResponse = invoiceRepository.save(invoice);
+		if (savedResponse == null) {
+			try {
+				throw new CustomException("Error while saving invoice to DB");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
 
-    public List<Invoice> getAllInvoices() {
-        return invoiceRepository.findAll();
-    }
+			}
+		}
 
-    public Invoice getInvoiceById(Long id) {
-        return invoiceRepository.findById(id).orElse(null);
-    }
-    
-    public boolean deleteInvoiceById(Long id) {
-    	try {
-    	 invoiceRepository.deleteById(id);
-    	 return true;
-    	}
-    	catch(Exception e) {
-    		
-    		e.printStackTrace();
-    		
-    	}
-    	return false;
-    	
-    }
-    
-    
-    
-    
-    
+		return true;
+	}
+
+	public boolean saveInvoices(List<Invoice> invoices) {
+		List<Invoice> savedResponse = invoiceRepository.saveAll(invoices);
+		if (savedResponse == null) {
+			try {
+				throw new CustomException("Error while saving invoices to DB");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+
+			}
+		}
+		return true;
+
+	}
+
+	public boolean deleteInvoiceById(Long id) {
+		try {
+			Invoice invoice = invoiceRepository.findById(id)
+					.orElseThrow(() -> new CustomException("No Invoice Found on the Database"));
+			// perform delete operation
+			invoiceRepository.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
 }
