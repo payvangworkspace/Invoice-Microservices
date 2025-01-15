@@ -1,4 +1,6 @@
-package com.payvang.Invoice.Services;
+package com.payvang.InvoiceRetrival.Services;
+
+import java.io.File;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -6,10 +8,9 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.payvang.Invoice.Entities.Invoice;
-import com.payvang.Invoice.Util.ConfigurationManager;
-import com.payvang.Invoice.Util.PropertyConstants;
-import java.io.File;
+import com.payvang.InvoiceRetrival.Entities.Invoice;
+import com.payvang.InvoiceRetrival.Util.ConfigurationManager;
+import com.payvang.InvoiceRetrival.Util.PropertyConstants;
 
 import jakarta.mail.internet.MimeMessage;
 

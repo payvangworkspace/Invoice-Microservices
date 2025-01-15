@@ -1,4 +1,4 @@
-package com.payvang.Invoice.Util;
+package com.payvang.InvoiceRetrival.Util;
 
 public class PropertyConstants {
     public static final String forgotPasswordRedirectUrl = "ui.fp.redirect";

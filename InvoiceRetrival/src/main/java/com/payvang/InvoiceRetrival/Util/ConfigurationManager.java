@@ -1,4 +1,4 @@
-package com.payvang.Invoice.Util;
+package com.payvang.InvoiceRetrival.Util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
