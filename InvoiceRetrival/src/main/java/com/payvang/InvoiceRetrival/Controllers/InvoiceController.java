@@ -30,9 +30,10 @@ public class InvoiceController {
     private EmailService emailService;
 
 
-    @PostMapping("/publish/{id}")
-    public ResponseEntity<?> publishInvoice(@PathVariable Long id) {
-        Invoice response = invoiceService.getInvoiceById(id);
+    @PostMapping("/publish")
+    public ResponseEntity<?> publishInvoice(@RequestBody Invoice invoice ) {
+    	System.out.println("id sent "+invoice.getId());
+        Invoice response = invoiceService.getInvoiceById(invoice.getId());
 
         if (response==null) {
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(CustomResponse.builder().message(Messages.SEND_ERROR).status(HttpStatus.BAD_REQUEST).build());
@@ -42,7 +43,7 @@ public class InvoiceController {
         // Construct the payment URL (example URL)
         String paymentUrl = "https://payvang.com/invoice/pay/" + response.getInvoiceNo();
 
-        emailService.sendInvoiceEmail(response, paymentUrl);
+        //emailService.sendInvoiceEmail(response, paymentUrl);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(CustomResponse.builder().message(Messages.SEND_SUCCESS).status(HttpStatus.ACCEPTED).build());
     }
     

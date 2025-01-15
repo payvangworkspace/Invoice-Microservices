@@ -1,5 +1,6 @@
 package com.payvang.Invoice.Services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class InvoiceService {
 	private InvoiceRepository invoiceRepository;
 
 	public boolean saveInvoice(Invoice invoice) {
-
+                  invoice.setCreateDate(new Date());
 		Invoice savedResponse = invoiceRepository.save(invoice);
 		if (savedResponse == null) {
 			try {

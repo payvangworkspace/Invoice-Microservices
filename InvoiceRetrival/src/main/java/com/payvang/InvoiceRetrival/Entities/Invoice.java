@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 
 @Entity
 @Proxy(lazy= false)
@@ -48,7 +49,10 @@ public  class Invoice implements Serializable {
 	private String messageBody;
 	private String shortUrl;
 	private String invoiceType;
- 
+	@Transient
+	private String enablePay;
+
+	   
 	public Invoice(){}
 	
 	
@@ -246,5 +250,12 @@ public  class Invoice implements Serializable {
 		this.appId = appId;
 	}
 	
+	 public String getEnablePay() {
+	        return enablePay;
+	    }
+
+	    public void setEnablePay(String enablePay) {
+	        this.enablePay = enablePay;
+	    }
 	
 }
