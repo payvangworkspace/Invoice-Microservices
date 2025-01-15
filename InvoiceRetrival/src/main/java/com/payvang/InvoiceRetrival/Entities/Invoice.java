@@ -51,7 +51,8 @@ public  class Invoice implements Serializable {
 	private String invoiceType;
 	@Transient
 	private String enablePay;
-
+	@Transient
+	private String hash;
 	   
 	public Invoice(){}
 	
@@ -257,5 +258,15 @@ public  class Invoice implements Serializable {
 	    public void setEnablePay(String enablePay) {
 	        this.enablePay = enablePay;
 	    }
+
+
+		public String getHash() {
+			return hash;
+		}
+
+
+		public void setHash(String hash) {
+			this.hash = hash;
+		}
 	
 }

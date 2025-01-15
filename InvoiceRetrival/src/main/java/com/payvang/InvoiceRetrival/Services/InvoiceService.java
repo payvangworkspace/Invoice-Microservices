@@ -12,12 +12,16 @@ import com.payvang.InvoiceRetrival.Entities.Invoice;
 import com.payvang.InvoiceRetrival.Exceptions.InternalServerError;
 import com.payvang.InvoiceRetrival.Exceptions.InvoiceNotFoundException;
 import com.payvang.InvoiceRetrival.Repositories.InvoiceRepository;
+import com.payvang.InvoiceRetrival.Util.InvoiceHasher;
 
 @Service
 public class InvoiceService {
 
 	@Autowired
 	private InvoiceRepository invoiceRepository;
+	
+	@Autowired
+	private InvoiceHasher invoicehasher;
 
 	  public List<Invoice> getAllInvoices() {
 		List<Invoice> invoices = invoiceRepository.findAll();
@@ -37,6 +41,8 @@ public class InvoiceService {
 	  public Invoice getInvoiceById(Long id) {
 		try {
 			Invoice invoice = invoiceRepository.findById(id).orElseThrow(() -> new InternalServerError());
+			String hashvalue=invoicehasher.createInvoiceHash(invoice);
+			invoice.setHash(hashvalue);
 			calculateEnablePay(invoice);
 			return invoice;
 		} catch (Exception e) {
